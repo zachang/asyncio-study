@@ -8,10 +8,13 @@ def coroutine_decorator(func):
 @coroutine_decorator
 def first_coroutine(pattern):
     print(f"Looking for ... {pattern}")
-    while True:
-        line = (yield) # yield expression
-        if pattern in line:
-            print(line)
+    try:
+        while True:
+            line = (yield) # yield expression
+            if pattern in line:
+                print(line)
+    except GeneratorExit:
+        print("Going away. Goodbye")
 
 _coroutine = first_coroutine("Django")
 _coroutine.send("Yeah, but no, but yeah, but no")
